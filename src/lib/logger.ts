@@ -2,12 +2,9 @@ import pino from "pino";
 
 const logger = pino(
   {
-    // Log level controlled by environment variable.
-    // Defaults to 'info' if not set.
     level: process.env.LOG_LEVEL ?? "info",
   },
-  // In development, pipe output through pino-pretty for readable logs.
-  // In production, pino writes raw JSON to stdout.
+  // In development, use pino-pretty for readable logs.
   process.env.NODE_ENV === "development"
     ? pino.transport({
         target: "pino-pretty",
@@ -16,7 +13,8 @@ const logger = pino(
           ignore: "pid,hostname",
         },
       })
-    : undefined,
+    : // In production, write output raw JSON.
+      undefined,
 );
 
 export default logger;
