@@ -2,8 +2,11 @@ import "dotenv/config";
 import logger from "./lib/logger";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import { logReqest } from "./middleware/logReqest";
 
 const app = new Hono();
+
+app.use(logReqest);
 
 app.get("/", (c) => {
   return c.json({ name: "Armarium", status: "ok" });
@@ -16,5 +19,3 @@ serve({ fetch: app.fetch, port }, () => {
 });
 
 export default app;
-
-// logger.info("Hello world");
