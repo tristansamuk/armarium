@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import logger from "../lib/logger";
+import logger from "../lib/logger.js";
 import { createMiddleware } from "hono/factory";
 
 const REQ_ID = "reqId";
