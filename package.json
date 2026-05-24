@@ -9,9 +9,9 @@
     "dev": "tsx --watch src/server.ts",
     "lint": "eslint . ",
     "prepare": "husky",
-    "db:push": "npx drizzle-kit push",
-    "db:generate": "npx drizzle-kit generate",
-    "db:migrate": "npx drizzle-kit migrate"
+    "db:push": "pnpm dlx drizzle-kit push",
+    "db:generate": "pnpm dlx drizzle-kit generate",
+    "db:migrate": "pnpm dlx drizzle-kit migrate"
   },
   "keywords": [],
   "author": "",
