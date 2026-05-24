@@ -16,8 +16,6 @@ app.get('/', (c) => {
 });
 app.route('/health', health);
 
-// db test
-
 // Entry point
 
 const port = Number(process.env.PORT) || 3000;
