@@ -6,7 +6,7 @@ import tseslint from "typescript-eslint";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 
 export default defineConfig(
-  { ignores: ["dist/**", "node_modules/**"] },
+  { ignores: ["dist/**", "node_modules/**", "drizzle/**", ".husky/**"] },
   js.configs.recommended,
   tseslint.configs.strict,
   eslintConfigPrettier
