@@ -36,10 +36,21 @@ pnpm dev
 
 The server will start on the port specified in your `.env` file (default: `3000`).
 
+## API
+
+| Method | Path      | Description                          |
+| ------ | --------- | ------------------------------------ |
+| GET    | `/`       | Returns app name and status          |
+| GET    | `/health` | Returns database connectivity status |
+
 ## Scripts
 
-| Command      | Description                              |
-| ------------ | ---------------------------------------- |
-| `pnpm dev`   | Start development server with hot reload |
-| `pnpm build` | Compile TypeScript to `dist/`            |
-| `pnpm lint`  | Run ESLint                               |
+| Command            | Description                              |
+| ------------------ | ---------------------------------------- |
+| `pnpm dev`         | Start development server with hot reload |
+| `pnpm build`       | Compile TypeScript to `dist/`            |
+| `pnpm lint`        | Run ESLint                               |
+| `pnpm db:generate` | Generate Drizzle migrations              |
+| `pnpm db:migrate`  | Run pending migrations                   |
+| `pnpm db:push`     | Push schema changes directly to database |
+| `pnpm db:studio`   | Open Drizzle Studio                      |
