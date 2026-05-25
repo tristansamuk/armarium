@@ -2,24 +2,33 @@ import { Hono } from 'hono';
 import { db } from '../db/dbIndex.js';
 import logger from '../lib/logger.js';
 import { authorsTable } from '../db/schema.js';
-import { createClient } from 'redis';
+import { redisClient } from '../redis/redisIndex.js';
 
 export const health = new Hono();
+
+const status = { postgres: false, redis: false };
 
 health.get('/', async (c) => {
   try {
     await db.select().from(authorsTable).limit(1);
-
-    const client = createClient();
-    await client.connect();
-
-    logger.info({ dbRunning: { postgres: true, redis: client.isReady } });
-
-    client.destroy();
-
-    return c.json({ message: 'Database is running' }, 200);
+    status.postgres = true;
   } catch (error) {
     logger.error(error);
-    return c.json({ message: "Couldn't access database" }, 503);
   }
+
+  try {
+    await redisClient.ping();
+    status.redis = true;
+  } catch (error) {
+    logger.error(error);
+  }
+
+  const isHealthy = status.postgres && status.redis;
+  const statusCode = isHealthy ? 200 : 503;
+
+  logger.info({ dbRunning: status });
+  return c.json(
+    { message: isHealthy ? 'OK' : 'degraded', services: status },
+    statusCode,
+  );
 });
