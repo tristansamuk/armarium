@@ -4,7 +4,6 @@ import { serve } from '@hono/node-server';
 import { logRequest } from './middleware/logRequest.js';
 import { Hono } from 'hono';
 import { health } from './routes/health.js';
-import { redisClient } from './redis/redisIndex.js';
 
 const app = new Hono();
 
@@ -16,15 +15,6 @@ app.get('/', (c) => {
   return c.json({ name: 'Armarium', status: 'ok' });
 });
 app.route('/health', health);
-
-// Redis
-
-redisClient.on('error', (error) => logger.error(error));
-await redisClient.connect();
-
-await redisClient.set('name', 'Tristan');
-const value = await redisClient.get('name');
-logger.info(value);
 
 // Entry point
 
