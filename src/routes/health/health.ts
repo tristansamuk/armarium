@@ -7,14 +7,15 @@ import { HEALTH_MESSAGE, DbStatus } from './healthTypes.js';
 
 export const health = new Hono();
 
-const status: DbStatus = { postgres: false, redis: false };
-
 health.get('/', async (c) => {
+  const status: DbStatus = { postgres: false, redis: false };
+
   try {
     await db.select().from(authorsTable).limit(1);
     status.postgres = true;
   } catch (error) {
     logger.error(error);
+    status.postgres = false;
   }
 
   try {
@@ -22,6 +23,7 @@ health.get('/', async (c) => {
     status.redis = true;
   } catch (error) {
     logger.error(error);
+    status.redis = false;
   }
 
   const isHealthy = status.postgres && status.redis;
