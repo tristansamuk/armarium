@@ -1,12 +1,13 @@
 import { Hono } from 'hono';
-import { db } from '../db/dbIndex.js';
-import logger from '../lib/logger.js';
-import { authorsTable } from '../db/schema.js';
-import { redisClient } from '../redis/redisIndex.js';
+import { db } from '../../db/dbIndex.js';
+import logger from '../../lib/logger.js';
+import { authorsTable } from '../../db/schema.js';
+import { redisClient } from '../../redis/redisIndex.js';
+import { HEALTH_MESSAGE, DbStatus } from './healthTypes.js';
 
 export const health = new Hono();
 
-const status = { postgres: false, redis: false };
+const status: DbStatus = { postgres: false, redis: false };
 
 health.get('/', async (c) => {
   try {
@@ -28,7 +29,10 @@ health.get('/', async (c) => {
 
   logger.info({ dbRunning: status });
   return c.json(
-    { message: isHealthy ? 'OK' : 'degraded', services: status },
+    {
+      message: isHealthy ? HEALTH_MESSAGE.OK : HEALTH_MESSAGE.DEGRADED,
+      services: status,
+    },
     statusCode,
   );
 });

@@ -3,7 +3,7 @@ import logger from './lib/logger.js';
 import { serve } from '@hono/node-server';
 import { logRequest } from './middleware/logRequest.js';
 import { Hono } from 'hono';
-import { health } from './routes/health.js';
+import { health } from './routes/health/health.js';
 
 const app = new Hono();
 
