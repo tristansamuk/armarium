@@ -2,7 +2,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    // globalSetup: '', // path to a global setup file with function called before all tests (like db start)
+    // globalSetup: './vitestGlobalSetup', // path to a global setup file with function called before all tests (like db start)
     // ui: false, // enable vitest ui
     // open: false, // open vitest UI automatically if enabled
     // clearMocks: false, // call vi.clearAllMocks() before each test (will cause problems with async concurrent tests)
